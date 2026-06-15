@@ -60,6 +60,10 @@
             overflow: hidden;
         }
 
+        body.gallery-open {
+            overflow: hidden;
+        }
+
         a, button {
             -webkit-tap-highlight-color: transparent;
         }
@@ -580,6 +584,190 @@
             filter: blur(55px);
         }
 
+        .project-preview-image {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+            z-index: 1;
+        }
+
+        .project-preview.has-gallery {
+            aspect-ratio: 2.1 / 1;
+            min-height: 210px;
+        }
+
+        .project-gallery-trigger {
+            position: absolute;
+            inset: 0;
+            z-index: 3;
+            display: flex;
+            align-items: flex-end;
+            justify-content: space-between;
+            width: 100%;
+            padding: 20px 22px;
+            border: 0;
+            color: var(--text-primary);
+            background: linear-gradient(180deg, transparent 42%, rgba(5, 6, 8, 0.92) 100%);
+            cursor: zoom-in;
+            text-align: left;
+        }
+
+        .gallery-trigger-label {
+            display: inline-flex;
+            align-items: center;
+            gap: 9px;
+            padding: 8px 12px;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 100px;
+            background: rgba(5, 6, 8, 0.76);
+            backdrop-filter: blur(10px);
+            font-size: 0.76rem;
+            font-weight: 700;
+        }
+
+        .gallery-trigger-count {
+            color: var(--accent-light);
+            font-size: 0.72rem;
+            font-weight: 700;
+        }
+
+        .project-gallery-trigger:hover .gallery-trigger-label {
+            border-color: var(--border-hover);
+        }
+
+        .project-gallery {
+            width: min(1120px, calc(100% - 32px));
+            max-width: none;
+            max-height: calc(100vh - 32px);
+            margin: auto;
+            padding: 0;
+            border: 1px solid var(--border-hover);
+            border-radius: 18px;
+            color: var(--text-primary);
+            background: #090c10;
+            box-shadow: 0 30px 100px rgba(0, 0, 0, 0.72);
+            overflow: hidden;
+        }
+
+        .project-gallery::backdrop {
+            background: rgba(0, 0, 0, 0.86);
+            backdrop-filter: blur(10px);
+        }
+
+        .gallery-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 24px;
+            padding: 18px 22px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .gallery-title {
+            font-family: var(--font-display);
+            font-size: 1.1rem;
+        }
+
+        .gallery-counter {
+            margin-left: 10px;
+            color: var(--text-muted);
+            font-family: var(--font-body);
+            font-size: 0.78rem;
+            font-weight: 600;
+        }
+
+        .gallery-close,
+        .gallery-arrow {
+            display: grid;
+            place-items: center;
+            border: 1px solid var(--border);
+            color: var(--text-primary);
+            background: rgba(15, 19, 24, 0.9);
+            cursor: pointer;
+        }
+
+        .gallery-close {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            font-size: 1.3rem;
+        }
+
+        .gallery-stage {
+            position: relative;
+            display: grid;
+            place-items: center;
+            min-height: 300px;
+            height: min(68vh, 680px);
+            background: #030405;
+        }
+
+        .gallery-image {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        .gallery-arrow {
+            position: absolute;
+            top: 50%;
+            z-index: 2;
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            font-size: 1.6rem;
+            transform: translateY(-50%);
+        }
+
+        .gallery-arrow:hover,
+        .gallery-close:hover {
+            border-color: var(--border-hover);
+            color: var(--accent-light);
+        }
+
+        .gallery-arrow.previous {
+            left: 18px;
+        }
+
+        .gallery-arrow.next {
+            right: 18px;
+        }
+
+        .gallery-thumbnails {
+            display: flex;
+            gap: 10px;
+            padding: 14px 18px 18px;
+            border-top: 1px solid var(--border);
+            overflow-x: auto;
+            scrollbar-color: var(--accent) transparent;
+        }
+
+        .gallery-thumbnail {
+            flex: 0 0 112px;
+            aspect-ratio: 2.1 / 1;
+            padding: 0;
+            border: 2px solid transparent;
+            border-radius: 7px;
+            background: var(--bg-card);
+            cursor: pointer;
+            overflow: hidden;
+            opacity: 0.55;
+        }
+
+        .gallery-thumbnail.active {
+            border-color: var(--accent);
+            opacity: 1;
+        }
+
+        .gallery-thumbnail img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
         .preview-mark {
             position: relative;
             z-index: 1;
@@ -743,7 +931,21 @@
             border: 1px solid var(--border);
             border-radius: 14px;
             background: rgba(15, 19, 24, 0.72);
+            overflow: hidden;
             transition: border-color 0.3s ease, transform 0.3s var(--ease);
+        }
+
+        .compact-project.has-preview {
+            padding: 0;
+        }
+
+        .compact-project-preview {
+            min-height: 180px;
+            aspect-ratio: 2.1 / 1;
+        }
+
+        .compact-project-content {
+            padding: 28px;
         }
 
         .compact-project:hover {
@@ -1201,8 +1403,50 @@
                 padding: 24px 20px;
             }
 
+            .compact-project.has-preview {
+                padding: 0;
+            }
+
+            .compact-project-content {
+                padding: 24px 20px;
+            }
+
             .project-preview {
                 min-height: 170px;
+            }
+
+            .project-preview.has-gallery {
+                min-height: 170px;
+            }
+
+            .project-gallery {
+                width: calc(100% - 20px);
+                max-height: calc(100vh - 20px);
+            }
+
+            .gallery-header {
+                padding: 14px 16px;
+            }
+
+            .gallery-stage {
+                height: min(60vh, 520px);
+            }
+
+            .gallery-arrow {
+                width: 42px;
+                height: 42px;
+            }
+
+            .gallery-arrow.previous {
+                left: 10px;
+            }
+
+            .gallery-arrow.next {
+                right: 10px;
+            }
+
+            .gallery-trigger-count {
+                display: none;
             }
 
             .project-features {
@@ -1355,9 +1599,18 @@
 
                 <div class="featured-grid">
                     <article class="project-card">
-                        <div class="project-preview">
-                            <span class="preview-mark">WSAI</span>
-                            <span class="preview-label">Product screenshot placeholder</span>
+                        <div class="project-preview has-gallery">
+                            <img class="project-preview-image" src="WiseSportsAi/1.png" alt="WiseSportsAI platform preview">
+                            <button
+                                class="project-gallery-trigger"
+                                type="button"
+                                aria-label="Open WiseSportsAI screenshot gallery"
+                                data-gallery-title="WiseSportsAI"
+                                data-gallery-images="WiseSportsAi/1.png|WiseSportsAi/WiseDashboard.png|WiseSportsAi/Nba%20props.png|WiseSportsAi/Capper.png|WiseSportsAi/Graph%201.png|WiseSportsAi/Graph2.png|WiseSportsAi/Graph3.png"
+                            >
+                                <span class="gallery-trigger-label"><span aria-hidden="true">+</span> View screenshots</span>
+                                <span class="gallery-trigger-count">7 project screens</span>
+                            </button>
                         </div>
                         <div class="project-content">
                             <div class="project-topline"><span class="project-type">Sports Analytics SaaS</span></div>
@@ -1421,9 +1674,18 @@
                     </article>
 
                     <article class="project-card">
-                        <div class="project-preview">
-                            <span class="preview-mark">CF</span>
-                            <span class="preview-label">Product screenshot placeholder</span>
+                        <div class="project-preview has-gallery">
+                            <img class="project-preview-image" src="ClearenceFinds/LandingPage1.png" alt="ClearanceFinds platform preview">
+                            <button
+                                class="project-gallery-trigger"
+                                type="button"
+                                aria-label="Open ClearanceFinds screenshot gallery"
+                                data-gallery-title="ClearanceFinds"
+                                data-gallery-images="ClearenceFinds/LandingPage1.png|ClearenceFinds/ViewDeal3.png|ClearenceFinds/Fullsnapshotoflandingpage.png|ClearenceFinds/4.png"
+                            >
+                                <span class="gallery-trigger-label"><span aria-hidden="true">+</span> View screenshots</span>
+                                <span class="gallery-trigger-count">4 project screens</span>
+                            </button>
                         </div>
                         <div class="project-content">
                             <div class="project-topline"><span class="project-type">E-commerce / Deal Discovery</span></div>
@@ -1459,19 +1721,34 @@
                         <div class="project-action"><a class="project-link" href="https://gi2aitalent.com" target="_blank" rel="noopener noreferrer">Visit live product <span aria-hidden="true">&nearr;</span></a></div>
                     </article>
 
-                    <article class="compact-project">
-                        <div class="project-topline"><span class="project-type">AI Resume Platform</span></div>
-                        <h3 class="project-title">MatchXpert</h3>
-                        <p class="project-role">Role: Full Stack Developer</p>
-                        <p class="project-description">An AI career platform that helps job seekers measure resume fit, identify missing skills, rewrite content, and produce targeted resumes for specific opportunities.</p>
-                        <ul class="project-features">
-                            <li>Resume analysis and matching</li><li>AI resume rewriting</li>
-                            <li>Resume builder and PDF export</li><li>Credits and Stripe payments</li>
-                        </ul>
-                        <div class="tags">
-                            <span class="tag">Node.js</span><span class="tag">React.js</span><span class="tag">MySQL</span><span class="tag">Sequelize</span><span class="tag">OpenAI API</span><span class="tag">Stripe</span><span class="tag">Cloudinary</span><span class="tag">JWT</span>
+                    <article class="compact-project has-preview">
+                        <div class="project-preview has-gallery compact-project-preview">
+                            <img class="project-preview-image" src="MatchXpert/dashboard1.png" alt="MatchXpert platform dashboard preview">
+                            <button
+                                class="project-gallery-trigger"
+                                type="button"
+                                aria-label="Open MatchXpert screenshot gallery"
+                                data-gallery-title="MatchXpert"
+                                data-gallery-images="MatchXpert/dashboard1.png|MatchXpert/Resumeandjobanalyisepage.png|MatchXpert/Analyiseresultpage.png|MatchXpert/Pricingpage.png"
+                            >
+                                <span class="gallery-trigger-label"><span aria-hidden="true">+</span> View screenshots</span>
+                                <span class="gallery-trigger-count">4 project screens</span>
+                            </button>
                         </div>
-                        <div class="project-action"><a class="project-link" href="https://matchxpert.com" target="_blank" rel="noopener noreferrer">Visit live product <span aria-hidden="true">&nearr;</span></a></div>
+                        <div class="compact-project-content">
+                            <div class="project-topline"><span class="project-type">AI Resume Platform</span></div>
+                            <h3 class="project-title">MatchXpert</h3>
+                            <p class="project-role">Role: Full Stack Developer</p>
+                            <p class="project-description">An AI career platform that helps job seekers measure resume fit, identify missing skills, rewrite content, and produce targeted resumes for specific opportunities.</p>
+                            <ul class="project-features">
+                                <li>Resume analysis and matching</li><li>AI resume rewriting</li>
+                                <li>Resume builder and PDF export</li><li>Credits and Stripe payments</li>
+                            </ul>
+                            <div class="tags">
+                                <span class="tag">Node.js</span><span class="tag">React.js</span><span class="tag">MySQL</span><span class="tag">Sequelize</span><span class="tag">OpenAI API</span><span class="tag">Stripe</span><span class="tag">Cloudinary</span><span class="tag">JWT</span>
+                            </div>
+                            <div class="project-action"><a class="project-link" href="https://matchxpert.com" target="_blank" rel="noopener noreferrer">Visit live product <span aria-hidden="true">&nearr;</span></a></div>
+                        </div>
                     </article>
                 </div>
             </div>
@@ -1597,6 +1874,19 @@
 
     <a class="sticky-cta" href="#contact" id="sticky-cta">Discuss a Project</a>
 
+    <dialog class="project-gallery" id="project-gallery" aria-labelledby="gallery-title">
+        <div class="gallery-header">
+            <h2 class="gallery-title" id="gallery-title">Project gallery <span class="gallery-counter" id="gallery-counter"></span></h2>
+            <button class="gallery-close" type="button" aria-label="Close screenshot gallery">&times;</button>
+        </div>
+        <div class="gallery-stage">
+            <button class="gallery-arrow previous" type="button" aria-label="Previous screenshot">&lsaquo;</button>
+            <img class="gallery-image" src="" alt="">
+            <button class="gallery-arrow next" type="button" aria-label="Next screenshot">&rsaquo;</button>
+        </div>
+        <div class="gallery-thumbnails" aria-label="Choose a screenshot"></div>
+    </dialog>
+
     <footer class="footer">
         <div class="container footer-content">
             <p>&copy; 2026 Muhammad Adeel. Full Stack SaaS Developer.</p>
@@ -1610,6 +1900,21 @@
         const menu = document.querySelector(".nav-links");
         const stickyCta = document.querySelector("#sticky-cta");
         const hero = document.querySelector("#hero");
+        const gallery = document.querySelector("#project-gallery");
+        const galleryTitle = document.querySelector("#gallery-title");
+        const galleryCounter = document.querySelector("#gallery-counter");
+        const galleryImage = gallery.querySelector(".gallery-image");
+        const galleryThumbnails = gallery.querySelector(".gallery-thumbnails");
+        const galleryClose = gallery.querySelector(".gallery-close");
+        const galleryPrevious = gallery.querySelector(".gallery-arrow.previous");
+        const galleryNext = gallery.querySelector(".gallery-arrow.next");
+        const galleryTriggers = document.querySelectorAll(".project-gallery-trigger");
+        const supportsHover = window.matchMedia("(hover: hover) and (pointer: fine)");
+        const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+        let activeGalleryImages = [];
+        let activeGalleryTitle = "";
+        let activeGalleryIndex = 0;
+        let touchStartX = 0;
 
         const closeMenu = () => {
             menu.classList.remove("open");
@@ -1617,6 +1922,106 @@
             menuButton.setAttribute("aria-label", "Open navigation menu");
             document.body.classList.remove("menu-open");
         };
+
+        const imageLabel = (source, index) => {
+            const fileName = decodeURIComponent(source.split("/").pop())
+                .replace(/\.[^.]+$/, "")
+                .replace(/[-_]/g, " ");
+            return `${activeGalleryTitle} screenshot ${index + 1}: ${fileName}`;
+        };
+
+        const showGalleryImage = (index) => {
+            activeGalleryIndex = (index + activeGalleryImages.length) % activeGalleryImages.length;
+            galleryImage.src = activeGalleryImages[activeGalleryIndex];
+            galleryImage.alt = imageLabel(activeGalleryImages[activeGalleryIndex], activeGalleryIndex);
+            galleryCounter.textContent = `${activeGalleryIndex + 1} / ${activeGalleryImages.length}`;
+            galleryThumbnails.querySelectorAll(".gallery-thumbnail").forEach((thumbnail, thumbnailIndex) => {
+                const isActive = thumbnailIndex === activeGalleryIndex;
+                thumbnail.classList.toggle("active", isActive);
+                thumbnail.setAttribute("aria-current", String(isActive));
+                if (isActive) thumbnail.scrollIntoView({ behavior: "smooth", block: "nearest", inline: "center" });
+            });
+        };
+
+        const openGallery = (trigger, startIndex = 0) => {
+            activeGalleryTitle = trigger.dataset.galleryTitle;
+            activeGalleryImages = trigger.dataset.galleryImages.split("|");
+            galleryTitle.firstChild.textContent = `${activeGalleryTitle} `;
+            galleryThumbnails.replaceChildren();
+
+            activeGalleryImages.forEach((source, index) => {
+                const thumbnail = document.createElement("button");
+                const thumbnailImage = document.createElement("img");
+                thumbnail.className = "gallery-thumbnail";
+                thumbnail.type = "button";
+                thumbnail.setAttribute("aria-label", `Show screenshot ${index + 1}`);
+                thumbnailImage.src = source;
+                thumbnailImage.alt = "";
+                thumbnail.append(thumbnailImage);
+                thumbnail.addEventListener("click", () => showGalleryImage(index));
+                galleryThumbnails.append(thumbnail);
+            });
+
+            showGalleryImage(startIndex);
+            gallery.showModal();
+            document.body.classList.add("gallery-open");
+        };
+
+        const closeGallery = () => {
+            gallery.close();
+            document.body.classList.remove("gallery-open");
+        };
+
+        galleryTriggers.forEach((trigger) => {
+            const preview = trigger.closest(".project-preview");
+            const previewImage = preview.querySelector(".project-preview-image");
+            const images = trigger.dataset.galleryImages.split("|");
+            let previewIndex = 0;
+            let previewTimer;
+
+            trigger.addEventListener("click", () => openGallery(trigger, previewIndex));
+
+            trigger.addEventListener("mouseenter", () => {
+                if (!supportsHover.matches || prefersReducedMotion.matches) return;
+                previewTimer = window.setInterval(() => {
+                    previewIndex = (previewIndex + 1) % images.length;
+                    previewImage.src = images[previewIndex];
+                }, 1100);
+            });
+
+            trigger.addEventListener("mouseleave", () => {
+                window.clearInterval(previewTimer);
+                previewIndex = 0;
+                previewImage.src = images[0];
+            });
+        });
+
+        galleryClose.addEventListener("click", closeGallery);
+        galleryPrevious.addEventListener("click", () => showGalleryImage(activeGalleryIndex - 1));
+        galleryNext.addEventListener("click", () => showGalleryImage(activeGalleryIndex + 1));
+
+        gallery.addEventListener("click", (event) => {
+            if (event.target === gallery) closeGallery();
+        });
+
+        gallery.addEventListener("close", () => {
+            document.body.classList.remove("gallery-open");
+        });
+
+        gallery.addEventListener("keydown", (event) => {
+            if (event.key === "ArrowLeft") showGalleryImage(activeGalleryIndex - 1);
+            if (event.key === "ArrowRight") showGalleryImage(activeGalleryIndex + 1);
+        });
+
+        galleryImage.addEventListener("touchstart", (event) => {
+            touchStartX = event.changedTouches[0].clientX;
+        }, { passive: true });
+
+        galleryImage.addEventListener("touchend", (event) => {
+            const distance = event.changedTouches[0].clientX - touchStartX;
+            if (Math.abs(distance) < 50) return;
+            showGalleryImage(activeGalleryIndex + (distance < 0 ? 1 : -1));
+        }, { passive: true });
 
         menuButton.addEventListener("click", () => {
             const isOpen = menuButton.getAttribute("aria-expanded") === "true";
